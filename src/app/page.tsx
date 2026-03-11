@@ -10,7 +10,7 @@ export default async function HomePage() {
 
     return (
         <div className="min-h-screen text-white">
-            <Navbar session={session}/>
+            <Navbar session={session} isDashboard={false}/>
             <main className="max-w-5xl mx-auto p-6 md:p-12 relative z-10">
                 <div className="py-16 md:py-24 flex flex-col items-center text-center">
                     <div className="inline-block px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-white/60 text-xs tracking-widest uppercase font-medium mb-6">

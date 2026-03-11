@@ -4,8 +4,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 
-export default function Navbar( { session }: { session: any }) {
-    if (!session) {
+export default function Navbar( { session, isDashboard }: { session: any, isDashboard: boolean }) {
+    if (!session && isDashboard) {
         redirect("/login")
     }
 
