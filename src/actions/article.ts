@@ -28,12 +28,13 @@ export async function addArticleAction(prevState: any, formData: FormData) {
         const title = formData.get("title")?.toString()
         const content = formData.get("content")?.toString()
         const documentation = formData.get("documentation")?.toString()
+        const created_by = session.username
         
         if (!title || !content || !documentation) {
             return { error: "All fields are required" }
         }
 
-        await createContent(title, content, documentation)
+        await createContent(title, content, documentation, created_by)
         
     } catch (err) {
         console.error(err)
@@ -53,12 +54,13 @@ export async function editArticleAction(prevState: any, formData: FormData) {
         const title = formData.get("title")?.toString()
         const content = formData.get("content")?.toString()
         const documentation = formData.get("documentation")?.toString()
+        const created_by = formData.get("user")?.toString()
         
-        if (!id || !title || !content || !documentation) {
+        if (!id || !title || !content || !documentation || !created_by) {
             return { error: "All fields are required" }
         }
 
-        await updateContent(id, title, content, documentation)
+        await updateContent(id, title, content, documentation, created_by)
         
     } catch (err) {
         console.error(err)

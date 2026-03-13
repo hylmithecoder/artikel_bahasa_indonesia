@@ -16,4 +16,6 @@ export interface ContentModel {
     title: string
     content: string | ContentSection[] // Can be raw JSON string from DB or parsed array
     documentation: string | string[] // Can be raw JSON string or parsed array
+    created_by: string
+    updated_at: Date
 }

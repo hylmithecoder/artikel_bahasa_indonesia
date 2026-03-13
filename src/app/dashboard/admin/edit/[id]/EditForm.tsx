@@ -95,6 +95,7 @@ export default function EditForm({ article }: { article: ContentModel }) {
             formData.append("title", title)
             formData.append("content", JSON.stringify(uploadedSections))
             formData.append("documentation", JSON.stringify(finalDocs))
+            formData.append("user", article.created_by) // Send original author
 
             const result = await editArticleAction(null, formData)
             if (result?.error) {

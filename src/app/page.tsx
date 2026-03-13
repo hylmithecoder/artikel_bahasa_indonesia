@@ -84,11 +84,16 @@ export default async function HomePage() {
                                             )}
                                         </div>
                                     )}
-                                    <div className="text-xs text-white/50 mb-3 block">
-                                        {new Date(article.created_at || Date.now()).toLocaleDateString("id-ID", {
-                                            year: 'numeric', month: 'long', day: 'numeric',
-                                            hour: '2-digit', minute: '2-digit'
-                                        })}
+                                    <div className="flex justify-between items-center text-xs text-white/50 mb-3">
+                                        <span>
+                                            {new Date(article.created_at || Date.now()).toLocaleDateString("id-ID", {
+                                                year: 'numeric', month: 'long', day: 'numeric',
+                                                hour: '2-digit', minute: '2-digit'
+                                            })}
+                                        </span>
+                                        <span className="bg-white/5 px-2 py-0.5 rounded border border-white/10 uppercase tracking-wider">
+                                            {article.created_by}
+                                        </span>
                                     </div>
                                     <h3 className="text-xl font-semibold text-white mb-2 line-clamp-2">{article.title}</h3>
                                     

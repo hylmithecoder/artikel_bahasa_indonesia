@@ -28,3 +28,11 @@ export const getContentById = async (id: number) => {
     )
     return rows[0]
 }
+
+export const getContentsByAuthor = async (username: string) => {
+    const [rows] = await pool.query<ContentModel[] & import("mysql2").RowDataPacket[]>(
+        "SELECT * FROM tbl_content WHERE created_by = ? ORDER BY created_at DESC",
+        [username]
+    )
+    return rows
+}

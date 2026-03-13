@@ -31,7 +31,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ id: st
 
     return (
         <>
-            <Navbar session={session}/>
+            <Navbar isDashboard={false} session={session}/>
             <div className="min-h-screen text-white p-6 md:p-12 relative z-10 max-w-4xl mx-auto">
             <div className="mb-6">
                 <Link href="/" className="inline-flex items-center gap-2 text-white/50 hover:text-white transition-colors bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:bg-white/10 glass-panel">
@@ -43,13 +43,18 @@ export default async function ArticlePage({ params }: { params: Promise<{ id: st
             <article className="glass-panel p-8 md:p-12 rounded-3xl">
                 <header className="mb-10 text-center">
                     <div className="inline-block bg-white/10 border border-white/20 text-white/70 text-sm py-1 px-3 rounded-full mb-4">
-                        {new Date(article.created_at || Date.now()).toLocaleDateString("id-ID", {
+                        {new Date(article.updated_at || Date.now()).toLocaleDateString("id-ID", {
                             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-                        })} · {new Date(article.created_at || Date.now()).toLocaleTimeString("id-ID", { hour: '2-digit', minute: '2-digit' })}
+                        })} · {new Date(article.updated_at || Date.now()).toLocaleTimeString("id-ID", { hour: '2-digit', minute: '2-digit' })}
                     </div>
                     <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
                         {article.title}
                     </h1>
+                    <div className="flex justify-end mt-2">
+                        <span className="text-white/40 text-sm italic">
+                            Created by <span className="text-white/70 font-semibold not-italic uppercase tracking-wide border-b border-white/10">{article.created_by}</span>
+                        </span>
+                    </div>
                 </header>
 
                 <div className="prose prose-invert prose-lg max-w-none mb-12">
