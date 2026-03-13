@@ -4,6 +4,57 @@ import { notFound } from "next/navigation"
 import { ContentSection } from "../../globalvariable"
 import Navbar from "@/components/navbar"
 import { getSession } from "@/actions/auth"
+import { Metadata } from "next"
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+    const { id } = await params
+    const article = await getContentById(Number(id))
+    
+    if (!article) return { title: "Article Not Found" }
+
+    let parsedContent: ContentSection[] = []
+    try {
+        parsedContent = typeof article.content === "string" ? JSON.parse(article.content) : article.content
+    } catch (e) {}
+
+    let parsedDocs: string[] = []
+    try {
+        parsedDocs = typeof article.documentation === "string" ? JSON.parse(article.documentation) : article.documentation
+    } catch (e) {}
+
+    // Find thumbnail
+    let thumbnailUrl = ""
+    for (const sec of parsedContent) {
+        if (sec.file && sec.file.length > 0) {
+            thumbnailUrl = sec.file[0]
+            break
+        }
+    }
+    if (!thumbnailUrl && parsedDocs && parsedDocs.length > 0) {
+        thumbnailUrl = parsedDocs[0]
+    }
+
+    const snippet = parsedContent.length > 0 
+        ? parsedContent[0].content.replace(/<[^>]+>/g, '').substring(0, 160) + "..."
+        : "Read this article on TRPL 2C"
+
+    return {
+        title: article.title,
+        description: snippet,
+        openGraph: {
+            title: article.title,
+            description: snippet,
+            images: thumbnailUrl ? [thumbnailUrl] : [],
+            type: "article",
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: article.title,
+            description: snippet,
+            images: thumbnailUrl ? [thumbnailUrl] : [],
+        }
+    }
+}
 
 export default async function ArticlePage({ params }: { params: Promise<{ id: string }> }) {
     const session = await getSession()
